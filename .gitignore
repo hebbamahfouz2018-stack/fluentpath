@@ -1,0 +1,9 @@
+# Dev tooling (not needed for the live site)
+__pycache__/
+tools/
+pdf/
+*.py
+*.bat
+*.json
+index_pharaoh_backup.html
+lesson18_moana2.pdf

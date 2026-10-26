@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FluentPath — Learn English from A1 to B2</title>
+<meta name="description" content="FluentPath is a guided English-learning platform following the CEFR scale from A1 to B2. Vocabulary lens with real pronunciation, a grammar timeline, a listening studio with circular progress rings, and interactive dialogue scenes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0d13; --ink-soft:#13161d; --ink-card:#171b21; --ink-line:#22262e;
+  --cream:#f1ebde; --cream-soft:#e7ddcc; --cream-faint:#aaa497; --cream-dim:#6a7282;
+  --gold:#e2ae43; --gold-deep:#b8892d; --gold-bright:#f3d9a0; --rust:#b44e2e;
+  --display:'Playfair Display',serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
+.font-display{font-family:var(--display)}
+.font-mono{font-family:var(--mono)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,13,19,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(241,235,222,.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;border-radius:50%;border:1px solid rgba(226,174,67,.4);background:rgba(226,174,67,.06);display:grid;place-items:center;color:var(--gold)}
+.logo-name{font-family:var(--display);font-size:20px;font-weight:600}
+.nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--cream-soft)}
+.nav-links a{opacity:.72;transition:.2s}
+.nav-links a:hover{opacity:1;color:var(--gold)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* ---------- SECTION SCAFFOLD ---------- */
+section{padding:72px 24px}
+.section-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.section-title{font-family:var(--display);font-size:clamp(30px,4.5vw,44px);font-weight:600;line-height:1.15;margin-top:10px}
+.section-sub{margin-top:14px;max-width:560px;color:rgba(231,221,204,.7);font-size:15px}
+.section-head{margin-bottom:34px}
+
+/* ---------- PILLS ---------- */
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid rgba(241,235,222,.15);color:rgba(231,221,204,.6);font-size:12px;border-radius:999px;padding:5px 13px;transition:.2s;white-space:nowrap}
+.pill:hover{border-color:rgba(241,235,222,.4);color:var(--cream)}
+.pill.active{border-color:var(--gold);background:rgba(226,174,67,.1);color:var(--gold)}
+
+/* ---------- HERO ---------- */
+.hero{padding:90px 24px 60px;position:relative;overflow:hidden}
+.hero-inner{max-width:1200px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(226,174,67,.3);background:rgba(226,174,67,.06);color:var(--gold);font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;border-radius:999px;padding:7px 16px}
+.hero-title{font-family:var(--display);font-size:clamp(38px,7vw,72px);font-weight:700;line-height:1.05;margin-top:26px}
+.hero-title .gold{color:var(--gold);font-style:italic}
+.hero-sub{max-width:620px;margin:22px auto 0;color:rgba(231,221,204,.72);font-size:17px}
+.hero-stats{display:flex;gap:36px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:var(--display);font-size:34px;font-weight:700;color:var(--gold)}
+.stat-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cream-faint);margin-top:4px}
+.hero-cta{margin-top:40px}
+.btn{border-radius:999px;padding:13px 30px;font-weight:600;font-size:14px;transition:.2s;display:inline-block}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold-bright)}
+.btn-ghost{border:1px solid rgba(241,235,222,.25);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ---------- VOCABULARY LENS ---------- */
+.vocab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:640px){.vocab-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.vocab-grid{grid-template-columns:repeat(4,1fr)}}
+.vtile{position:relative;overflow:hidden;border-radius:14px;border:1px solid rgba(241,235,222,.1);background:var(--ink-card);padding:20px;text-align:left;transition:border-color .2s,transform .15s}
+.vtile:hover{border-color:rgba(241,235,222,.32)}
+.vtile .badge{position:absolute;top:12px;right:12px;border-radius:999px;padding:2px 8px;font-family:var(--mono);font-size:10px}
+.vtile .word{font-family:var(--display);font-size:24px;font-weight:600;color:var(--cream)}
+.vtile .phonetic{margin-top:4px;font-family:var(--mono);font-size:12px;color:rgba(231,221,204,.5)}
+.vtile .pos{margin-top:4px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(231,221,204,.4)}
+.vtile .hear{margin-top:12px;display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(231,221,204,.6);opacity:0;transition:.2s}
+.vtile:hover .hear{opacity:1}
+.vtile .hear svg{color:var(--accent,var(--gold))}
+.vocab-count{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--cream-faint)}
+
+/* lens popup */
+#lens{position:fixed;z-index:100;width:300px;border-radius:16px;border:1px solid rgba(226,174,67,.3);background:#13161d;box-shadow:0 24px 60px rgba(0,0,0,.6);padding:20px;opacity:0;transform:translateY(8px) scale(.98);transition:.18s;visibility:hidden}
+#lens.show{opacity:1;transform:translateY(0) scale(1);visibility:visible}
+#lens .lens-word{font-family:var(--display);font-size:22px;font-weight:600}
+#lens .lens-phon{font-family:var(--mono);font-size:13px;color:var(--gold);margin-top:2px}
+#lens .lens-pos{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(231,221,204,.4);margin-top:4px}
+#lens .lens-def{margin-top:12px;font-size:13.5px;color:rgba(231,221,204,.85)}
+#lens .lens-ex{margin-top:8px;font-size:12.5px;font-style:italic;color:rgba(231,221,204,.55);border-left:2px solid rgba(226,174,67,.4);padding-left:10px}
+#lens .lens-play{margin-top:14px;display:inline-flex;align-items:center;gap:7px;border-radius:999px;border:1px solid rgba(226,174,67,.4);background:rgba(226,174,67,.1);color:var(--gold);padding:7px 15px;font-size:12.5px;font-weight:600;transition:.2s}
+#lens .lens-play:hover{background:rgba(226,174,67,.2)}
+
+/* ---------- GRAMMAR SPOTLIGHT ---------- */
+.grammar-top{display:flex;align-items:center;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.grammar-top .pills{flex:1}
+.arrow{width:42px;height:42px;border-radius:50%;border:1px solid rgba(241,235,222,.2);display:grid;place-items:center;color:var(--cream);transition:.2s}
+.arrow:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.arrow:disabled{opacity:.3;cursor:default}
+.timeline{position:relative;height:30px;margin-bottom:28px}
+.timeline-line{position:absolute;left:0;right:0;top:50%;height:1px;transform:translateY(-50%);background:linear-gradient(to right,transparent,rgba(241,235,222,.2),transparent)}
+.tdot{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;cursor:pointer}
+.tdot .dot{width:9px;height:9px;border-radius:50%;margin:0 auto;transition:.25s;box-shadow:0 0 12px currentColor}
+.tdot .lbl{margin-top:3px;font-family:var(--mono);font-size:9.5px;color:rgba(231,221,204,.4);white-space:nowrap}
+.tdot.active .dot{width:13px;height:13px}
+.tdot.active .lbl{color:var(--cream)}
+.bays{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;cursor:grab;scrollbar-width:none}
+.bays::-webkit-scrollbar{display:none}
+.bays.dragging{cursor:grabbing;scroll-snap-type:none}
+.bay{flex:0 0 300px;scroll-snap-align:start;border-radius:16px;border:1px solid rgba(241,235,222,.1);background:var(--ink-card);padding:22px;transition:.2s}
+.bay:hover{border-color:rgba(241,235,222,.25)}
+.bay .g-badge{display:inline-block;border-radius:999px;padding:2px 9px;font-family:var(--mono);font-size:10px}
+.bay .g-title{margin-top:12px;font-family:var(--display);font-size:21px;font-weight:600}
+.bay .g-rule{margin-top:8px;font-size:13.5px;color:rgba(231,221,204,.75);line-height:1.55}
+.bay .g-pattern{margin-top:14px;border-radius:10px;border:1px solid rgba(241,235,222,.1);background:rgba(11,13,19,.55);padding:10px 12px}
+.bay .g-pattern .plabel{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(231,221,204,.4)}
+.bay .g-pattern .ptext{margin-top:5px;font-family:var(--mono);font-size:12px;color:rgba(231,221,204,.9)}
+.bay .g-example{margin-top:12px;font-size:12.5px;font-style:italic;color:rgba(231,221,204,.55)}
+
+/* ---------- LISTENING STUDIO ---------- */
+.ls-grid{display:grid;gap:24px}
+@media(min-width:1024px){.ls-grid{grid-template-columns:1fr 1.1fr}}
+.player-card{position:relative;overflow:hidden;border-radius:18px;border:1px solid rgba(241,235,222,.1);background:var(--ink-card);padding:40px 32px;display:flex;flex-direction:column;align-items:center}
+.ring-wrap{position:relative;width:260px;height:260px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.play-btn{width:64px;height:64px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;transition:.2s;box-shadow:0 8px 30px rgba(226,174,67,.3)}
+.play-btn:hover{background:var(--gold-bright);transform:scale(1.05)}
+.track-time{font-family:var(--mono);font-size:13px;color:var(--cream-faint)}
+.track-title{font-family:var(--display);font-size:20px;font-weight:600;margin-top:22px;text-align:center}
+.track-narrator{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-faint);margin-top:4px}
+.transcript{position:relative;border-radius:18px;border:1px solid rgba(241,235,222,.1);background:var(--ink-soft);padding:28px;max-height:420px;overflow-y:auto}
+.transcript p{font-size:15px;line-height:1.8;color:rgba(231,221,204,.85)}
+.transcript-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:14px}
+
+/* ---------- DIALOGUE ROOM ---------- */
+.dlg-card{overflow:hidden;border-radius:18px;border:1px solid rgba(241,235,222,.1);background:var(--ink-soft)}
+.dlg-head{padding:26px 28px;border-bottom:1px solid rgba(241,235,222,.1)}
+.dlg-title-row{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+.dlg-desc{margin-top:10px;max-width:640px;font-size:13.5px;color:rgba(231,221,204,.7);line-height:1.55}
+.dlg-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.speaker-chip{display:flex;align-items:center;gap:7px;border:1px solid rgba(241,235,222,.1);border-radius:999px;padding:5px 12px;font-size:12px;color:rgba(231,221,204,.7)}
+.speaker-chip .sdot{width:8px;height:8px;border-radius:50%}
+.dlg-lines{padding:14px 28px 6px}
+.dlg-line{display:flex;gap:14px;padding:14px 12px;border-radius:12px;cursor:pointer;transition:.15s;align-items:flex-start}
+.dlg-line:hover{background:rgba(241,235,222,.04)}
+.dlg-line.playing{background:rgba(226,174,67,.07)}
+.speaker-avatar{flex-shrink:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink)}
+.speaker-name{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.speaker-role{font-size:10px;color:var(--cream-faint)}
+.line-text{font-size:14.5px;color:rgba(231,221,204,.88);line-height:1.5}
+.dlg-line .replay{opacity:0;transition:.2s;flex-shrink:0;color:var(--gold);display:grid;place-items:center}
+.dlg-line:hover .replay,.dlg-line.playing .replay{opacity:1}
+.dlg-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px;padding:0 28px 20px;font-family:var(--mono);font-size:11px;color:var(--cream-faint)}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid rgba(241,235,222,.08);background:var(--ink-soft);padding:56px 24px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer-brand{font-family:var(--display);font-size:18px;font-weight:600}
+.footer-tag{font-size:13px;color:rgba(231,221,204,.55);margin-top:6px;max-width:380px}
+.footer-links{display:flex;gap:20px;font-size:13px;color:rgba(231,221,204,.6)}
+.footer-links a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="logo-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </span>
+      <span class="logo-name">FluentPath</span>
+    </div>
+    <div class="nav-links">
+      <a href="#vocab">Vocabulary</a>
+      <a href="#grammar">Grammar</a>
+      <a href="#listening">Listening</a>
+      <a href="#dialogue">Dialogue</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">Guided path · A1 → B2</span>
+    <h1 class="hero-title">Learn English <span class="gold">one scene</span><br>at a time.</h1>
+    <p class="hero-sub">Real expressions from the films you love. Hear every word spoken aloud, walk the grammar timeline, and speak your first real dialogue.</p>
+    <div class="hero-stats" id="heroStats"></div>
+    <div class="hero-cta">
+      <a href="#vocab" class="btn btn-gold">Start learning</a>
+      <a href="#listening" class="btn btn-ghost" style="margin-left:10px">Train your ear</a>
+    </div>
+  </div>
+</header>
+
+<section id="vocab">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The Vocabulary Lens</span>
+      <h2 class="section-title">Hover a word. Hear it speak.</h2>
+      <p class="section-sub">Real expressions from the lessons. Glide your cursor across the tiles — a lens opens with the phonetic, the definition, and a button to hear the word spoken aloud.</p>
+    </div>
+    <div class="pills" id="vocabFilters" style="margin-bottom:20px"></div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+    <div class="vocab-count" id="vocabCount"></div>
+  </div>
+</section>
+
+<section id="grammar" style="background:var(--ink-soft)">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The Grammar Spotlight</span>
+      <h2 class="section-title">From the silent W to rolling your eyes.</h2>
+      <p class="section-sub">Drag the arc to walk the lessons. Each bay holds a grammar pattern straight from the film — its rule, and a sentence that puts it in your hand.</p>
+    </div>
+    <div class="grammar-top">
+      <div class="pills" id="grammarFilters"></div>
+      <button class="arrow" id="gPrev" aria-label="Scroll grammar left">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button class="arrow" id="gNext" aria-label="Scroll grammar right">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <div class="bays" id="bays"></div>
+  </div>
+</section>
+
+<section id="listening">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The Listening Studio</span>
+      <h2 class="section-title">Train the ear, then the tongue.</h2>
+      <p class="section-sub">Each track is a real recorded passage. Press the ring to begin — the gold arc follows the voice, and the transcript unscrolls beneath.</p>
+    </div>
+    <div class="pills" id="trackFilters" style="margin-bottom:24px"></div>
+    <div class="ls-grid">
+      <div class="player-card">
+        <div class="ring-wrap">
+          <svg width="260" height="260" viewBox="0 0 260 260">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#e2ae43"/>
+                <stop offset="100%" stop-color="#f3d9a0"/>
+              </linearGradient>
+            </defs>
+            <circle cx="130" cy="130" r="124" fill="none" stroke="#262b34" stroke-width="7"/>
+            <circle id="ringProgress" cx="130" cy="130" r="124" fill="none" stroke="url(#ringGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="779.1" stroke-dashoffset="779.1" style="transition:stroke-dashoffset .25s linear;filter:drop-shadow(0 0 6px rgba(226,174,67,.5))"/>
+          </svg>
+          <div class="ring-center">
+            <button class="play-btn" id="listenPlay">
+              <svg id="playIcon" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div class="track-time" id="trackTime">0:00</div>
+          </div>
+        </div>
+        <div class="track-title" id="trackTitle"></div>
+        <div class="track-narrator" id="trackNarrator"></div>
+      </div>
+      <div>
+        <div class="transcript-head">Transcript</div>
+        <div class="transcript" id="transcript"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dialogue" style="background:var(--ink-soft)">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The Dialogue Room</span>
+      <h2 class="section-title">A scene, real voices.</h2>
+      <p class="section-sub">Listen to a real conversation unfold. Tap any line to replay it, or press play to walk the whole scene from the first hello.</p>
+    </div>
+    <div class="pills" id="dlgFilters" style="margin-bottom:24px"></div>
+    <div class="dlg-card" id="dlgCard"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">FluentPath</div>
+      <p class="footer-tag">A guided path from your first "hello" to confident B2 English. Built for learners who want every word to land.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#vocab">Vocabulary</a>
+      <a href="#grammar">Grammar</a>
+      <a href="#listening">Listening</a>
+      <a href="#dialogue">Dialogue</a>
+    </div>
+  </div>
+</footer>
+
+<div id="lens"></div>
+
+<script src="data.js"></script>
+<script>
+const D = window.FLUENTPATH_DATA;
+const lessons = D.lessons;
+const vocab = D.vocabulary;
+const grammar = D.grammarTopics;
+const tracks = D.listeningTracks;
+const dialogues = D.dialogues;
+const L = id => lessons.find(l => l.id === id);
+function lessonAccent(lessonId){ const l = L(lessonId); return l ? l.accent : '#e2ae43'; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ---------- audio engine ---------- */
+let currentAudio = null;
+let currentAudioKey = '';
+function playAudio(path, key){
+  if(currentAudio && currentAudioKey === key){
+    if(currentAudio.paused){ currentAudio.play().catch(()=>{}); }
+    else { currentAudio.pause(); }
+    return currentAudio;
+  }
+  if(currentAudio){ currentAudio.pause(); }
+  currentAudio = new Audio(path);
+  currentAudioKey = key;
+  currentAudio.play().catch(()=>{});
+  currentAudio.addEventListener('ended', ()=>{ currentAudioKey=''; });
+  return currentAudio;
+}
+
+/* ---------- HERO STATS ---------- */
+(function(){
+  const stats = [
+    [lessons.length, 'Lessons live'],
+    [vocab.length, 'Expressions'],
+    [grammar.length, 'Grammar patterns'],
+    [tracks.length, 'Listening tracks']
+  ];
+  document.getElementById('heroStats').innerHTML = stats.map(s =>
+    `<div class="stat"><div class="stat-num">${s[0]}</div><div class="stat-label">${s[1]}</div></div>`
+  ).join('');
+})();
+
+/* ---------- VOCABULARY LENS ---------- */
+let vocabFilter = 'all';
+function renderVocabFilters(){
+  const el = document.getElementById('vocabFilters');
+  let html = `<button class="pill ${vocabFilter==='all'?'active':''}" data-l="all">All</button>`;
+  lessons.forEach(l => {
+    html += `<button class="pill ${vocabFilter===l.id?'active':''}" data-l="${l.id}">L${l.number}: ${esc(l.title)}</button>`;
+  });
+  el.innerHTML = html;
+  el.querySelectorAll('.pill').forEach(p => p.addEventListener('click', ()=>{
+    vocabFilter = p.dataset.l;
+    renderVocabFilters();
+    renderVocab();
+  }));
+}
+function renderVocab(){
+  const grid = document.getElementById('vocabGrid');
+  const list = vocabFilter === 'all' ? vocab : vocab.filter(v => v.lesson === vocabFilter);
+  document.getElementById('vocabCount').textContent = `${list.length} expressions${vocabFilter!=='all' ? ' · ' + esc(L(vocabFilter).title) : ''}`;
+  grid.innerHTML = list.map(v => {
+    const acc = v.accent || lessonAccent(v.lesson);
+    return `<button class="vtile" data-id="${v.id}" style="--accent:${acc}">
+      <span class="badge" style="background:${acc}22;color:${acc}">L${L(v.lesson).number}</span>
+      <div class="word">${esc(v.word)}</div>
+      <div class="phonetic">${esc(v.phonetic||'')}</div>
+      <div class="pos">${esc(v.pos||'')}</div>
+      <div class="hear">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.7"/></svg>
+        Click to hear
+      </div>
+    </button>`;
+  }).join('');
+  grid.querySelectorAll('.vtile').forEach(t => {
+    const v = vocab.find(x => x.id === t.dataset.id);
+    t.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      playAudio(v.audio, v.id);
+      showLens(v, t);
+    });
+    t.addEventListener('mouseenter', ()=> showLens(v, t));
+    t.addEventListener('mouseleave', hideLens);
+  });
+}
+const lens = document.getElementById('lens');
+function showLens(v, tile){
+  lens.innerHTML = `
+    <div class="lens-word">${esc(v.word)}</div>
+    <div class="lens-phon">${esc(v.phonetic||'')}</div>
+    <div class="lens-pos">${esc(v.pos||'')}</div>
+    <div class="lens-def">${esc(v.definition||'')}</div>
+    ${v.example ? `<div class="lens-ex">${esc(v.example)}</div>` : ''}
+    <button class="lens-play" id="lensPlayBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Hear it
+    </button>`;
+  document.getElementById('lensPlayBtn').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    playAudio(v.audio, v.id);
+  });
+  lens.classList.add('show');
+  const r = tile.getBoundingClientRect();
+  const lw = 300, lh = lens.offsetHeight || 220;
+  let x = r.right + 14;
+  if(x + lw > window.innerWidth - 10) x = r.left - lw - 14;
+  if(x < 10) x = 10;
+  let y = r.top;
+  if(y + lh > window.innerHeight - 10) y = window.innerHeight - lh - 10;
+  lens.style.left = x + 'px';
+  lens.style.top = Math.max(10, y) + 'px';
+}
+function hideLens(){ lens.classList.remove('show'); }
+
+/* ---------- GRAMMAR SPOTLIGHT ---------- */
+let grammarFilter = 'all';
+function renderGrammarFilters(){
+  const el = document.getElementById('grammarFilters');
+  let html = `<button class="pill ${grammarFilter==='all'?'active':''}" data-l="all">All</button>`;
+  lessons.forEach(l => {
+    html += `<button class="pill ${grammarFilter===l.id?'active':''}" data-l="${l.id}">L${l.number}</button>`;
+  });
+  el.innerHTML = html;
+  el.querySelectorAll('.pill').forEach(p => p.addEventListener('click', ()=>{
+    grammarFilter = p.dataset.l;
+    renderGrammarFilters();
+    renderGrammar();
+  }));
+}
+function grammarList(){ return grammarFilter==='all' ? grammar : grammar.filter(g => g.lesson === grammarFilter); }
+function renderGrammar(){
+  const list = grammarList();
+  const tl = document.getElementById('timeline');
+  const lessonIds = grammarFilter==='all' ? lessons.map(l=>l.id) : [grammarFilter];
+  const withGrammar = lessonIds.filter(id => grammar.some(g => g.lesson===id));
+  tl.innerHTML = withGrammar.map((id,i)=>{
+    const pct = withGrammar.length===1 ? 50 : (i/(withGrammar.length-1))*100;
+    const acc = lessonAccent(id);
+    const active = grammarFilter===id ? 'active' : '';
+    return `<div class="tdot ${active}" data-l="${id}" style="left:${pct}%">
+      <div class="dot" style="background:${acc};color:${acc}"></div>
+      <div class="lbl">L${L(id).number}</div>
+    </div>`;
+  }).join('');
+  tl.querySelectorAll('.tdot').forEach(d => d.addEventListener('click', ()=>{
+    grammarFilter = d.dataset.l;
+    renderGrammarFilters();
+    renderGrammar();
+  }));
+  const bays = document.getElementById('bays');
+  bays.innerHTML = list.map(g => {
+    const acc = lessonAccent(g.lesson);
+    return `<div class="bay" data-l="${g.lesson}">
+      <span class="g-badge" style="background:${acc}22;color:${acc}">L${L(g.lesson).number}</span>
+      <div class="g-title">${esc(g.topic)}</div>
+      <div class="g-rule">${esc(g.summary||'')}</div>
+      ${g.pattern ? `<div class="g-pattern"><div class="plabel">Pattern</div><div class="ptext">${esc(g.pattern)}</div></div>` : ''}
+      ${g.example ? `<div class="g-example">"${esc(g.example)}"</div>` : ''}
+    </div>`;
+  }).join('');
+}
+let isDown=false, startX=0, gScrollLeft=0;
+(function(){
+  const b = document.getElementById('bays');
+  b.addEventListener('mousedown', e=>{ isDown=true; startX=e.pageX; gScrollLeft=b.scrollLeft; b.classList.add('dragging'); });
+  window.addEventListener('mouseup', ()=>{ isDown=false; b.classList.remove('dragging'); });
+  b.addEventListener('mousemove', e=>{ if(!isDown) return; e.preventDefault(); b.scrollLeft = gScrollLeft - (e.pageX-startX); });
+  document.getElementById('gPrev').addEventListener('click', ()=> b.scrollBy({left:-320, behavior:'smooth'}));
+  document.getElementById('gNext').addEventListener('click', ()=> b.scrollBy({left:320, behavior:'smooth'}));
+})();
+
+/* ---------- LISTENING STUDIO ---------- */
+let currentTrack = tracks[0];
+let trackAudio = null;
+function renderTrackFilters(){
+  const el = document.getElementById('trackFilters');
+  el.innerHTML = tracks.map((t,i) =>
+    `<button class="pill ${t.id===currentTrack.id?'active':''}" data-i="${i}">${esc(t.title)}</button>`
+  ).join('');
+  el.querySelectorAll('.pill').forEach(p => p.addEventListener('click', ()=>{
+    selectTrack(tracks[+p.dataset.i]);
+  }));
+}
+function selectTrack(t){
+  currentTrack = t;
+  if(trackAudio){ trackAudio.pause(); trackAudio = null; }
+  if(currentAudio){ currentAudio.pause(); currentAudioKey=''; }
+  renderTrackFilters();
+  document.getElementById('trackTitle').textContent = t.title;
+  document.getElementById('trackNarrator').textContent = t.narrator || '';
+  document.getElementById('transcript').innerHTML = `<p>${esc(t.transcript||'')}</p>`;
+  document.getElementById('trackTime').textContent = `0:00 / ${fmt(t.duration)}`;
+  setRing(0);
+  document.getElementById('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+}
+function fmt(s){ s=Math.floor(s||0); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
+function setRing(frac){
+  const C = 2*Math.PI*124;
+  document.getElementById('ringProgress').style.strokeDashoffset = C*(1-frac);
+}
+function toggleTrack(){
+  if(trackAudio && !trackAudio.paused){
+    trackAudio.pause();
+    document.getElementById('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+    return;
+  }
+  if(!trackAudio){
+    trackAudio = new Audio(currentTrack.audio);
+    trackAudio.addEventListener('timeupdate', ()=>{
+      const d = currentTrack.duration || trackAudio.duration || 1;
+      setRing(trackAudio.currentTime/d);
+      document.getElementById('trackTime').textContent = `${fmt(trackAudio.currentTime)} / ${fmt(d)}`;
+    });
+    trackAudio.addEventListener('ended', ()=>{
+      document.getElementById('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
+      setRing(0);
+      document.getElementById('trackTime').textContent = `0:00 / ${fmt(currentTrack.duration)}`;
+    });
+  }
+  trackAudio.play().catch(()=>{});
+  document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6zm8 0h4V5h-4z"/>';
+}
+document.getElementById('listenPlay').addEventListener('click', toggleTrack);
+
+/* ---------- DIALOGUE ROOM ---------- */
+let currentDlg = dialogues[0];
+let lineAudio = null;
+let playingLineId = null;
+function renderDlgFilters(){
+  const el = document.getElementById('dlgFilters');
+  el.innerHTML = dialogues.map(d => {
+    const acc = lessonAccent(d.lesson);
+    return `<button class="pill ${d.id===currentDlg.id?'active':''}" data-d="${d.id}">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${acc};margin-right:6px"></span>
+      ${esc(d.title)} <span style="opacity:.5;font-size:11px">L${L(d.lesson).number}</span>
+    </button>`;
+  }).join('');
+  el.querySelectorAll('.pill').forEach(p => p.addEventListener('click', ()=>{
+    selectDlg(dialogues.find(x=>x.id===p.dataset.d));
+  }));
+}
+function selectDlg(d){
+  currentDlg = d;
+  if(lineAudio){ lineAudio.pause(); }
+  playingLineId = null;
+  renderDlgFilters();
+  renderDlg();
+}
+function renderDlg(){
+  const acc = lessonAccent(currentDlg.lesson);
+  const speakers = [];
+  currentDlg.lines.forEach(ln => { if(!speakers.find(s=>s.speaker===ln.speaker)) speakers.push(ln); });
+  const card = document.getElementById('dlgCard');
+  card.innerHTML = `
+    <div class="dlg-head">
+      <div class="dlg-title-row" style="color:${acc}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        L${L(currentDlg.lesson).number}: ${esc(L(currentDlg.lesson).title)} · ${esc(currentDlg.title)}
+      </div>
+      <p class="dlg-desc">${esc(currentDlg.setting||'')}</p>
+      <div class="dlg-legend">
+        ${speakers.map(s => `<span class="speaker-chip"><span class="sdot" style="background:${s.accent||acc}"></span>${esc(s.speaker)}</span>`).join('')}
+      </div>
+    </div>
+    <div class="dlg-lines">
+      ${currentDlg.lines.map(ln => `
+        <div class="dlg-line" data-line="${ln.id}">
+          <div class="speaker-avatar" style="background:${ln.accent||acc}">${esc((ln.speaker||'?')[0])}</div>
+          <div style="flex:1;min-width:0">
+            <div class="speaker-name" style="color:${ln.accent||acc}">${esc(ln.speaker)} <span class="speaker-role">· ${esc(ln.role||'')}</span></div>
+            <div class="line-text">${esc(ln.text)}</div>
+          </div>
+          <div class="replay">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-7-6v4a9 9 0 1 0 0 18"/></svg>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="dlg-meta">
+      <span>${speakers.length} speakers · ${currentDlg.lines.length} lines</span>
+      <span>Each line is a separate recording — replay freely.</span>
+    </div>`;
+  card.querySelectorAll('.dlg-line').forEach(ln => {
+    const line = currentDlg.lines.find(x => x.id === +ln.dataset.line);
+    ln.addEventListener('click', ()=>{
+      card.querySelectorAll('.dlg-line').forEach(x=>x.classList.remove('playing'));
+      if(lineAudio && playingLineId === line.id && !lineAudio.paused){
+        lineAudio.pause(); playingLineId = null; return;
+      }
+      if(lineAudio){ lineAudio.pause(); }
+      ln.classList.add('playing');
+      playingLineId = line.id;
+      lineAudio = new Audio(line.audio);
+      lineAudio.play().catch(()=>{});
+      lineAudio.addEventListener('ended', ()=>{ ln.classList.remove('playing'); playingLineId=null; }, {once:true});
+    });
+  });
+}
+
+/* ---------- init ---------- */
+renderVocabFilters(); renderVocab();
+renderGrammarFilters(); renderGrammar();
+renderTrackFilters(); selectTrack(currentTrack);
+renderDlgFilters(); renderDlg();
+</script>
+</body>
+</html>
