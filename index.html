@@ -82,6 +82,14 @@ section{padding:72px 24px}
 .vtile .hear svg{color:var(--accent,var(--gold))}
 .vocab-count{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--cream-faint)}
 
+/* search */
+.search-wrap{position:relative;max-width:520px;margin-bottom:18px}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--cream-faint);pointer-events:none}
+.search-wrap input{width:100%;padding:13px 16px 13px 42px;background:var(--ink-card);border:1px solid rgba(241,235,222,.15);border-radius:12px;color:var(--cream);font-family:var(--body);font-size:14.5px;outline:none;transition:.2s}
+.search-wrap input::placeholder{color:var(--cream-faint)}
+.search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(226,174,67,.12)}
+.no-results{grid-column:1/-1;padding:48px;text-align:center;color:var(--cream-faint);border:1px dashed rgba(241,235,222,.15);border-radius:14px}
+
 /* lens popup */
 #lens{position:fixed;z-index:100;width:300px;border-radius:16px;border:1px solid rgba(226,174,67,.3);background:#13161d;box-shadow:0 24px 60px rgba(0,0,0,.6);padding:20px;opacity:0;transform:translateY(8px) scale(.98);transition:.18s;visibility:hidden}
 #lens.show{opacity:1;transform:translateY(0) scale(1);visibility:visible}
@@ -202,6 +210,10 @@ footer{border-top:1px solid rgba(241,235,222,.08);background:var(--ink-soft);pad
       <span class="eyebrow">The Vocabulary Lens</span>
       <h2 class="section-title">Hover a word. Hear it speak.</h2>
       <p class="section-sub">Real expressions from the lessons. Glide your cursor across the tiles — a lens opens with the phonetic, the definition, and a button to hear the word spoken aloud.</p>
+    </div>
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="vocabSearch" placeholder="Search any word or expression… (e.g. 'lousy', 'give', 'negotiate')" autocomplete="off">
     </div>
     <div class="pills" id="vocabFilters" style="margin-bottom:20px"></div>
     <div class="vocab-grid" id="vocabGrid"></div>
@@ -342,6 +354,7 @@ function playAudio(path, key){
 
 /* ---------- VOCABULARY LENS ---------- */
 let vocabFilter = 'all';
+let searchQuery = '';
 function renderVocabFilters(){
   const el = document.getElementById('vocabFilters');
   let html = `<button class="pill ${vocabFilter==='all'?'active':''}" data-l="all">All</button>`;
@@ -357,8 +370,15 @@ function renderVocabFilters(){
 }
 function renderVocab(){
   const grid = document.getElementById('vocabGrid');
-  const list = vocabFilter === 'all' ? vocab : vocab.filter(v => v.lesson === vocabFilter);
-  document.getElementById('vocabCount').textContent = `${list.length} expressions${vocabFilter!=='all' ? ' · ' + esc(L(vocabFilter).title) : ''}`;
+  const base = vocabFilter === 'all' ? vocab : vocab.filter(v => v.lesson === vocabFilter);
+  const q = searchQuery;
+  const list = q ? base.filter(v => (v.word+' '+(v.definition||'')+' '+(v.example||'')+' '+(v.phonetic||'')+' '+(v.pos||'')).toLowerCase().includes(q)) : base;
+  const suffix = vocabFilter!=='all' ? ' · ' + esc(L(vocabFilter).title) : '';
+  document.getElementById('vocabCount').textContent = q ? `${list.length} result${list.length===1?'':'s'} for "${q}"${suffix}` : `${list.length} expressions${suffix}`;
+  if(list.length === 0){
+    grid.innerHTML = `<div class="no-results">No match for "${esc(q)}" — try another word or clear the search.</div>`;
+    return;
+  }
   grid.innerHTML = list.map(v => {
     const acc = v.accent || lessonAccent(v.lesson);
     return `<button class="vtile" data-id="${v.id}" style="--accent:${acc}">
@@ -598,6 +618,7 @@ function renderDlg(){
 
 /* ---------- init ---------- */
 renderVocabFilters(); renderVocab();
+document.getElementById('vocabSearch').addEventListener('input', e=>{ searchQuery = e.target.value.trim().toLowerCase(); renderVocab(); });
 renderGrammarFilters(); renderGrammar();
 renderTrackFilters(); selectTrack(currentTrack);
 renderDlgFilters(); renderDlg();
