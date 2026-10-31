@@ -395,7 +395,7 @@ function updateProgress(){
   const note = document.getElementById('progressNote');
   if(pct===0) note.textContent = 'Tap the ☆ on any word to mark it mastered.';
   else if(pct===100) note.textContent = '🏆 ALL MASTERED! You are a B2 machine!';
-  else if(pct>=50) note.textContent = '🔥 ' + done + '/' + total + ' words mastered — you're over halfway!';
+  else if(pct>=50) note.textContent = '🔥 ' + done + '/' + total + ' words mastered — you\'re over halfway!';
   else note.textContent = '✨ ' + done + '/' + total + ' words mastered — every word counts!';
 }
 function renderVocabFilters(){
