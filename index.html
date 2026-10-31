@@ -449,8 +449,8 @@ function renderVocab(){
       playAudio(v.audio, v.id);
       showLens(v, t);
     });
-    t.addEventListener('mouseenter', ()=> showLens(v, t));
-    t.addEventListener('mouseleave', hideLens);
+    t.addEventListener('mouseenter', ()=>{ clearTimeout(hideTimer); clearTimeout(showTimer); showTimer = setTimeout(()=> showLens(v, t), 120); });
+    t.addEventListener('mouseleave', ()=>{ clearTimeout(showTimer); hideTimer = setTimeout(hideLens, 300); });
   });
   grid.querySelectorAll('.star').forEach(s => {
     s.addEventListener('click', (e)=>{
@@ -500,7 +500,11 @@ function showLens(v, tile){
   lens.style.left = x + 'px';
   lens.style.top = Math.max(10, y) + 'px';
 }
+let hideTimer = null;
+let showTimer = null;
 function hideLens(){ lens.classList.remove('show'); }
+lens.addEventListener('mouseenter', ()=>{ clearTimeout(hideTimer); clearTimeout(showTimer); });
+lens.addEventListener('mouseleave', ()=>{ hideTimer = setTimeout(hideLens, 200); });
 
 /* ---------- GRAMMAR SPOTLIGHT ---------- */
 let grammarFilter = 'all';
