@@ -389,13 +389,15 @@ function toggleLearned(id, star, tile){
 function updateProgress(){
   const total = vocab.length;
   const done = [...learned].filter(id => vocab.some(v=>v.id===id)).length;
-  const pct = total ? Math.round(done/total*100) : 0;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
+  const frac = total ? done/total : 0;
+  const pct = Math.round(frac*100);
+  const pctText = (frac > 0 && pct === 0) ? (frac*100).toFixed(1) + '%' : pct + '%';
+  document.getElementById('progressFill').style.width = (frac*100) + '%';
+  document.getElementById('progressPct').textContent = pctText;
   const note = document.getElementById('progressNote');
-  if(pct===0) note.textContent = 'Tap the ☆ on any word to mark it mastered.';
-  else if(pct===100) note.textContent = '🏆 ALL MASTERED! You are a B2 machine!';
-  else if(pct>=50) note.textContent = '🔥 ' + done + '/' + total + ' words mastered — you\'re over halfway!';
+  if(done===0) note.textContent = 'Tap the ☆ on any word to mark it mastered.';
+  else if(frac===1) note.textContent = '🏆 ALL MASTERED! You are a B2 machine!';
+  else if(frac>=0.5) note.textContent = '🔥 ' + done + '/' + total + ' words mastered — you\'re over halfway!';
   else note.textContent = '✨ ' + done + '/' + total + ' words mastered — every word counts!';
 }
 function renderVocabFilters(){
