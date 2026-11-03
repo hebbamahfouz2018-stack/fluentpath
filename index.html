@@ -182,6 +182,33 @@ section{padding:72px 24px}
 .dlg-line:hover .replay,.dlg-line.playing .replay{opacity:1}
 .dlg-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px;padding:0 28px 20px;font-family:var(--mono);font-size:11px;color:var(--cream-faint)}
 
+/* ---------- B2 SHEET (RTL Arabic) ---------- */
+.b2-progress{position:sticky;top:64px;z-index:40;background:var(--ink-card);border:1px solid rgba(226,174,67,.25);border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.b2-progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.b2-progress-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--gold)}
+.b2-progress-pct{font-family:var(--display);font-size:22px;font-weight:700;color:var(--gold)}
+.b2-progress-bar{height:9px;border-radius:999px;background:rgba(241,235,222,.1);overflow:hidden}
+.b2-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright));transition:.4s;border-radius:999px}
+.b2-progress-note{font-size:11.5px;color:var(--cream-faint);margin-top:8px}
+.b2-card{background:var(--ink-card);border:1px solid rgba(241,235,222,.1);border-radius:14px;padding:18px;margin-bottom:12px;position:relative}
+.b2-card.studied{border-color:rgba(226,174,67,.5)}
+.b2-card .b2-num{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:11px;color:var(--cream-faint)}
+.b2-card .b2-star{position:absolute;top:10px;right:14px;font-size:22px;cursor:pointer;color:var(--cream-faint);transition:.15s;user-select:none;z-index:2}
+.b2-card .b2-star:hover{transform:scale(1.2)}
+.b2-card .b2-star.on{color:var(--gold)}
+.b2-card .b2-en{font-family:var(--display);font-size:19px;font-weight:600;color:var(--gold-bright);direction:ltr;text-align:right;padding-left:30px}
+.b2-card .b2-phon{font-family:var(--mono);font-size:12px;color:#4fc3f7;direction:ltr;text-align:right;margin-top:3px}
+.b2-card .b2-meaning{margin-top:10px;font-size:15px;font-weight:600;color:var(--cream)}
+.b2-card .b2-meaning .m-tag{display:inline-block;background:rgba(79,195,247,.12);color:#4fc3f7;border-radius:6px;padding:1px 8px;font-size:11px;font-weight:700;margin-left:8px}
+.b2-card .b2-ex{margin-top:10px;background:var(--ink-soft);border-radius:10px;padding:10px 13px}
+.b2-card .b2-ex-en{font-family:var(--body);font-size:13px;color:var(--cream-soft);direction:ltr;text-align:right;font-style:italic}
+.b2-card .b2-ex-ar{font-size:12.5px;color:var(--cream-faint);margin-top:3px}
+.b2-card .b2-rel{margin-top:12px;border-top:1px dashed rgba(241,235,222,.12);padding-top:11px}
+.b2-card .b2-rel-title{font-size:12px;font-weight:700;color:#4ade80;margin-bottom:8px}
+.b2-card .b2-chips{display:flex;flex-wrap:wrap;gap:7px}
+.b2-card .b2-chip{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.22);border-radius:999px;padding:3px 11px;font-size:12px;color:#9ee8c4}
+.b2-card .b2-chip b{font-family:var(--body);color:#c9f5e0;direction:ltr;display:inline-block}
+
 /* ---------- FOOTER ---------- */
 footer{border-top:1px solid rgba(241,235,222,.08);background:var(--ink-soft);padding:56px 24px}
 .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
@@ -206,6 +233,7 @@ footer{border-top:1px solid rgba(241,235,222,.08);background:var(--ink-soft);pad
       <a href="#grammar">Grammar</a>
       <a href="#listening">Listening</a>
       <a href="#dialogue">Dialogue</a>
+      <a href="#b2" style="color:var(--gold)">B2 Sheet</a>
     </div>
   </div>
 </nav>
@@ -317,6 +345,25 @@ footer{border-top:1px solid rgba(241,235,222,.08);background:var(--ink-soft);pad
     </div>
     <div class="pills" id="dlgFilters" style="margin-bottom:24px"></div>
     <div class="dlg-card" id="dlgCard"></div>
+  </div>
+</section>
+
+<section id="b2">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">The B2 Expressions Sheet</span>
+      <h2 class="section-title" style="direction:rtl">تعبيرات <span style="color:var(--gold)">B2</span> بمعناها بالعربي</h2>
+      <p class="section-sub" style="direction:rtl">تعبيرات عالية الاستخدام، كل واحد بمعناه بالعربي + تعبيرات مقاربة توسّع مفرداتك. علّم بنجمة ⭐ على اللي حفظته.</p>
+    </div>
+    <div class="b2-progress">
+      <div class="b2-progress-top">
+        <span class="b2-progress-lbl">📊 تقدمك</span>
+        <span class="b2-progress-pct" id="b2Pct">0%</span>
+      </div>
+      <div class="b2-progress-bar"><div class="b2-progress-fill" id="b2Fill"></div></div>
+      <div class="b2-progress-note" id="b2Note" style="direction:rtl">اضغط ⭐ على أي تعبير عشان تعلّم إنك حفظته.</div>
+    </div>
+    <div class="b2-cards" id="b2Cards" style="direction:rtl"></div>
   </div>
 </section>
 
@@ -704,12 +751,98 @@ function renderDlg(){
   });
 }
 
+/* ---------- B2 SHEET ---------- */
+const B2_DATA = [
+ ["wrap your head around","/ræp jɔːr hɛd əˈraʊnd/","تفهم حاجة صعبة أو معقدة","I can't wrap my head around this math problem.","مش قادر أستوعب مسألة الرياضيات دي.",[["figure out","يفهم / يحل"],["make sense of","يفهم المعنى"],["get your head around","نفس المعنى"]]],
+ ["at the end of the day","/ət ði ɛnd əv ðə deɪ/","في النهاية / في الآخر","At the end of the day, family is what matters.","في الآخر، العيلة هي المهمة.",[["when all is said and done","بعد كل حاجة"],["in the long run","على المدى البعيد"],["ultimately","في النهاية"]]],
+ ["on the fence","/ɒn ðə fɛns/","محتار / مش عارف تختار","I'm on the fence about moving to a new city.","أنا محتار بخصوص الانتقال لمدينة جديدة.",[["torn between","ممزق بين"],["in two minds","محتار بين رأيين"],["undecided","غير محسوم"]]],
+ ["a blessing in disguise","/ə ˈblɛsɪŋ ɪn dɪsˈɡaɪz/","مصيبة طلعت في صالحك","Losing that job was a blessing in disguise.","خسارة الشغل ده كانت خير متخفّي.",[["a silver lining","جانب مضيء"],["every cloud has a silver lining","لكل مشكلة إيجابية"],["turned out for the best","طلع للأحسن"]]],
+ ["get the hang of","/ɡɛt ðə hæŋ əv/","تتعلم / تتقن حاجة","It took me a week to get the hang of driving.","أخدت أسبوع عشان أتقن السواقة.",[["get the knack of","تتعلم الحيلة"],["pick up","تتعلم بسرعة"],["master","تتقن"]]],
+ ["under the weather","/ˈʌndər ðə ˈwɛðər/","تعبان / مريض","I'm feeling under the weather today.","حاسس إني تعبان النهاردة.",[["feel off","حاسس مش مظبوط"],["run down","مرهق / منهك"],["out of sorts","مش على بعضي"]]],
+ ["hit the books","/hɪt ðə bʊks/","تذاكر بجد","I need to hit the books before the exam.","محتاج أذاكر بجد قبل الامتحان.",[["cram","تذاكر بسرعة قبل الامتحان"],["study up on","تراجع / تدرس"],["burn the midnight oil","تسهر تذاكر"]]],
+ ["a piece of cake","/ə piːs əv keɪk/","سهل جدًا","The test was a piece of cake.","الامتحان كان سهل جدًا.",[["a walk in the park","سهل زي المشي"],["a breeze","سهل جدًا"],["no sweat","من غير مجهود"]]],
+ ["break the ice","/breɪk ði aɪs/","تكسر الجليد / تبدأ كلام","I told a joke to break the ice.","قلت نكتة عشان أكسر الجليد.",[["strike up a conversation","تفتح كلام"],["warm up to","تتآلف مع"],["get the ball rolling","تبدأ الكلام"]]],
+ ["call it a day","/kɔːl ɪt ə deɪ/","تخلّص الشغل لليوم","Let's call it a day and go home.","يالّا نخلّص النهاردة ونروّح.",[["wrap up","تختتم"],["knock off","تخلّص شغل"],["pack it in","توقف شغل"]]],
+ ["cut corners","/kʌt ˈkɔːrnərz/","توفر على حساب الجودة","Don't cut corners on safety.","متوفّرش في الأمان.",[["take shortcuts","تاخد طرق مختصرة"],["skimp on","تبخل / توفّر"],["do it on the cheap","تعمله بأرخص طريقة"]]],
+ ["get cold feet","/ɡɛt koʊld fiːt/","تتراجع / تخاف فجأة","He got cold feet before the wedding.","اتخض وخاف قبل الفرح.",[["chicken out","تتراجع من الخوف"],["back out","تنسحب"],["have second thoughts","تراجع نفسك"]]],
+ ["hit the nail on the head","/hɪt ðə neɪl ɒn ðə hɛd/","تجاوب صح تمامًا","You hit the nail on the head.","جاوبت صح بالظبط.",[["spot on","صح 100%"],["on point","مظبوط"],["dead right","صح تمامًا"]]],
+ ["in the long run","/ɪn ðə lɔːŋ rʌn/","على المدى البعيد","In the long run, hard work pays off.","على المدى البعيد، الاجتهاد بيجيب نتيجة.",[["in the long term","على المدى الطويل"],["down the road","في المستقبل"],["over time","مع الوقت"]]],
+ ["let someone down","/lɛt ˈsʌmwʌn daʊn/","تخيّب ظن حد","I won't let you down.","مش هخيّب ظنك.",[["disappoint","تخذل"],["fail someone","تفشّل حد"],["fall short","تقصّر"]]],
+ ["on the same page","/ɒn ðə seɪm peɪdʒ/","متفقين / فاهمين بعض","Let's make sure we're on the same page.","نتأكد إننا متفقين.",[["see eye to eye","تتفقوا"],["in agreement","متفقين"],["on the same wavelength","على نفس الموجة"]]],
+ ["pull yourself together","/pʊl jɔːrˈsɛlf təˈɡɛðər/","تمالك نفسك","Pull yourself together and keep going.","تمالك نفسك وكمّل.",[["get a grip","تمالك نفسك"],["get it together","رتّب حالك"],["snap out of it","صحصح"]]],
+ ["take it with a grain of salt","/teɪk ɪt wɪð ə ɡreɪn əv sɔːlt/","ما تصدّقش الكلام كله","Take his advice with a grain of salt.","خد نصيحته بحذر.",[["don't take it at face value","ما تصدّقش ظاهره"],["be skeptical","كن مشكّك"],["a pinch of salt","نفس المعنى"]]],
+ ["the ball is in your court","/ðə bɔːl ɪz ɪn jɔːr kɔːrt/","القرار / الدور عليك","I've done my part; the ball is in your court.","أنا عملت اللي عليا، الدور عليك.",[["it's up to you","القرار ليك"],["the floor is yours","الكلمة ليك"],["your move","دورك"]]],
+ ["throw in the towel","/θroʊ ɪn ðə ˈtaʊəl/","تستسلم","Don't throw in the towel yet.","متستسلمش لسه.",[["give up","تستسلم"],["call it quits","توقف"],["wave the white flag","تستسلم"]]],
+ ["up in the air","/ʌp ɪn ði ɛər/","لسه مش محسوم","Our plans are still up in the air.","خططنا لسه مش محددة.",[["undecided","غير محسوم"],["in limbo","معلّق"],["up for grabs","مش محجوز"]]],
+ ["weigh the pros and cons","/weɪ ðə proʊz ænd kɒnz/","توازن الإيجابيات والسلبيات","Weigh the pros and cons before deciding.","وازن الإيجابيات والسلبيات قبل ما تقرر.",[["think it through","فكّر فيها كويس"],["consider both sides","فكّر في الناحيتين"],["weigh your options","وازن اختياراتك"]]],
+ ["bite the bullet","/baɪt ðə ˈbʊlɪt/","تتقبّل الصعب / تواجه","I'll bite the bullet and tell her the truth.","هتقبّل وأقولها الحقيقة.",[["face the music","تواجه العواقب"],["take the plunge","تخاطر وتجرّب"],["grin and bear it","تستحمل"]]],
+ ["by the book","/baɪ ðə bʊk/","بالحرف / بالقانون","The officer did everything by the book.","الضابط عمل كل حاجة بالقانون.",[["play by the rules","تلتزم بالقواعد"],["to the letter","حرفيًا"],["follow protocol","تلتزم بالإجراءات"]]],
+ ["get the ball rolling","/ɡɛt ðə bɔːl ˈroʊlɪŋ/","تبدأ الشغل","Let's get the ball rolling on the project.","يالّا نبدأ المشروع.",[["kick off","تبدأ"],["set things in motion","تبدأ التنفيذ"],["get started","تبدأ"]]],
+ ["in hot water","/ɪn hɒt ˈwɔːtər/","في ورطة","He's in hot water with his boss.","هو في ورطة مع مديره.",[["in trouble","في مشكلة"],["in deep water","في ورطة كبيرة"],["on thin ice","في موقف خطر"]]],
+ ["last but not least","/læst bʌt nɒt liːst/","وأخيرًا وليس آخرًا","Last but not least, I'd like to thank my family.","وأخيرًا وليس آخرًا، بحب أشكر عيلتي.",[["finally","أخيرًا"],["to wrap up","للختام"],["and finally","وأخيرًا"]]],
+ ["miss the boat","/mɪs ðə boʊt/","تضيّع الفرصة","I missed the boat on that investment.","فوّت فرصة الاستثمار ده.",[["miss out on","يفوتك"],["miss the opportunity","تضيع الفرصة"],["too little too late","متأخر جدًا"]]],
+ ["once in a blue moon","/wʌns ɪn ə bluː muːn/","نادرًا جدًا","I eat out once in a blue moon.","باكل برا نادرًا جدًا.",[["rarely","نادرًا"],["hardly ever","بالكاد"],["every once in a while","من حين لآخر"]]],
+ ["read between the lines","/riːd bɪˈtwiːn ðə laɪnz/","تفهم ما بين السطور","Read between the lines — she's not happy.","افهم ما بين السطور — هي مش مبسوطة.",[["read into","تأوّل / تفسّر"],["take the hint","تفهم التلميح"],["catch the subtext","تفهم المعنى الخفي"]]],
+ ["run out of","/rʌn aʊt əv/","يخلُص / ينفَد","We ran out of milk.","اللبن خلص عندنا.",[["use up","تستهلك كله"],["run short of","ينقص"],["be all out of","خلص عنده"]]],
+ ["step up your game","/stɛp ʌp jɔːr ɡeɪm/","تحسّن مستواك","You need to step up your game.","محتاج تحسّن مستواك.",[["raise the bar","ترفع المستوى"],["up your game","نفس المعنى"],["level up","ترتقي"]]],
+ ["take for granted","/teɪk fər ˈɡræntɪd/","ما تقدّرش / تعتبره مسلّم به","Don't take your health for granted.","متعتبرش صحتك أمر مفروغ منه.",[["take as given","تعتبره مفروغ منه"],["not appreciate","ما تقدّرش"],["overlook","تتجاهل"]]],
+ ["think outside the box","/θɪŋk ˌaʊtˈsaɪd ðə bɒks/","تفكّر بطريقة مبتكرة","We need to think outside the box.","محتاجين نفكّر خارج الصندوق.",[["think creatively","تفكّر بإبداع"],["break the mold","تكسر النمط"],["push the envelope","تتجاوز الحدود"]]],
+ ["look on the bright side","/lʊk ɒn ðə braɪt saɪd/","تشوف الجانب المضيء","Look on the bright side — it could be worse.","شوف الجانب المضيء — كان ممكن يبقى أسوأ.",[["see the glass half full","تتفائل"],["count your blessings","احمد ربك"],["stay positive","خليك إيجابي"]]],
+];
+let b2Learned = new Set();
+try { b2Learned = new Set(JSON.parse(localStorage.getItem('fluentpath_b2')||'[]')); } catch(e){}
+function b2Save(){ try{ localStorage.setItem('fluentpath_b2', JSON.stringify([...b2Learned])); }catch(e){} b2Update(); }
+function b2Update(){
+  const total = B2_DATA.length, done = b2Learned.size;
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('b2Fill').style.width = pct+'%';
+  document.getElementById('b2Pct').textContent = pct+'%';
+  const n = document.getElementById('b2Note');
+  if(done===0) n.textContent = 'اضغط ⭐ على أي تعبير عشان تعلّم إنك حفظته.';
+  else if(pct===100) n.textContent = '🏆 خلصت الكل! أسطورة B2!';
+  else if(pct>=50) n.textContent = '🔥 '+done+'/'+total+' محفوظ — عدّيت النص، كمّل!';
+  else n.textContent = '✨ '+done+'/'+total+' محفوظ — كل تعبير بيقرّبك لـ B2.';
+}
+function renderB2(){
+  const c = document.getElementById('b2Cards');
+  c.innerHTML = B2_DATA.map((d,i)=>{
+    const [en, phon, meaning, exEn, exAr, rel] = d;
+    const on = b2Learned.has(i);
+    return `<div class="b2-card ${on?'studied':''}" data-i="${i}">
+      <span class="b2-num">${String(i+1).padStart(2,'0')}</span>
+      <span class="b2-star ${on?'on':''}">${on?'⭐':'☆'}</span>
+      <div class="b2-en">${en}</div>
+      <div class="b2-phon">${phon}</div>
+      <div class="b2-meaning"><span class="m-tag">المعنى</span>${meaning}</div>
+      <div class="b2-ex">
+        <div class="b2-ex-en">"${exEn}"</div>
+        <div class="b2-ex-ar">${exAr}</div>
+      </div>
+      <div class="b2-rel">
+        <div class="b2-rel-title">🔗 تعبيرات مقاربة</div>
+        <div class="b2-chips">${rel.map(r=>`<span class="b2-chip"><b>${r[0]}</b> — ${r[1]}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+  c.querySelectorAll('.b2-star').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      const i = +s.closest('.b2-card').dataset.i;
+      const card = s.closest('.b2-card');
+      if(b2Learned.has(i)){ b2Learned.delete(i); s.classList.remove('on'); s.textContent='☆'; card.classList.remove('studied'); }
+      else { b2Learned.add(i); s.classList.add('on'); s.textContent='⭐'; card.classList.add('studied'); }
+      b2Save();
+    });
+  });
+  b2Update();
+}
+
 /* ---------- init ---------- */
 renderVocabFilters(); renderVocab(); updateProgress();
 document.getElementById('vocabSearch').addEventListener('input', e=>{ searchQuery = e.target.value.trim().toLowerCase(); renderVocab(); });
 renderGrammarFilters(); renderGrammar();
 renderTrackFilters(); selectTrack(currentTrack);
 renderDlgFilters(); renderDlg();
+renderB2();
 </script>
 </body>
 </html>
